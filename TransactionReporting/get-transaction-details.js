@@ -1,13 +1,13 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function getTransactionDetails(transactionId, callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var getRequest = new ApiContracts.GetTransactionDetailsRequest();
 	getRequest.setMerchantAuthentication(merchantAuthenticationType);
@@ -52,4 +52,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.getTransactionDetails = getTransactionDetails;
+const _getTransactionDetails = getTransactionDetails;
+export { _getTransactionDetails as getTransactionDetails };

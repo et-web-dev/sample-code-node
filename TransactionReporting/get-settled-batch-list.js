@@ -1,15 +1,15 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { apiLoginKey, transactionKey } from '../constants.js';
 var dateAWeekAgoISO = new Date(Date.now() - 3600 * 24 * 7).toISOString();
 var dateNowISO = new Date().toISOString();
 
 function getSettledBatchList(callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var createRequest = new ApiContracts.GetSettledBatchListRequest();
 	createRequest.setMerchantAuthentication(merchantAuthenticationType);
@@ -65,4 +65,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.getSettledBatchList = getSettledBatchList;
+const _getSettledBatchList = getSettledBatchList;
+export { _getSettledBatchList as getSettledBatchList };

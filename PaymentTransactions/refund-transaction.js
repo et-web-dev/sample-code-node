@@ -1,14 +1,14 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomAmount } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function refundTransaction(transactionId, callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var creditCard = new ApiContracts.CreditCardType();
 	creditCard.setCardNumber('4242424242424242');
@@ -20,7 +20,7 @@ function refundTransaction(transactionId, callback) {
 	var transactionRequestType = new ApiContracts.TransactionRequestType();
 	transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.REFUNDTRANSACTION);
 	transactionRequestType.setPayment(paymentType);
-	transactionRequestType.setAmount(utils.getRandomAmount());
+	transactionRequestType.setAmount(getRandomAmount());
 	transactionRequestType.setRefTransId(transactionId);
 
 	var createRequest = new ApiContracts.CreateTransactionRequest();
@@ -84,4 +84,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.refundTransaction = refundTransaction;
+const _refundTransaction = refundTransaction;
+export { _refundTransaction as refundTransaction };

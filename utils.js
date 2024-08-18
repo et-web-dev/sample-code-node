@@ -17,7 +17,11 @@ function getDate(){
 }
 
 
-module.exports.getRandomString = getRandomString;
-module.exports.getRandomInt = getRandomInt;
-module.exports.getRandomAmount = getRandomAmount;
-module.exports.getDate = getDate;
+const _getRandomString = getRandomString;
+export { _getRandomString as getRandomString };
+const _getRandomInt = getRandomInt;
+export { _getRandomInt as getRandomInt };
+const _getRandomAmount = getRandomAmount;
+export { _getRandomAmount as getRandomAmount };
+const _getDate = getDate;
+export { _getDate as getDate };

@@ -1,14 +1,14 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomAmount } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function credit(transactionId, callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var payPalType = new ApiContracts.PayPalType();
 	payPalType.setCancelUrl('http://www.merchanteCommerceSite.com/Success/TC25262');
@@ -20,7 +20,7 @@ function credit(transactionId, callback) {
 	var txnRequest = new ApiContracts.TransactionRequestType();
 	txnRequest.setTransactionType(ApiContracts.TransactionTypeEnum.REFUNDTRANSACTION);
 	txnRequest.setPayment(paymentType);
-	txnRequest.setAmount(utils.getRandomAmount());
+	txnRequest.setAmount(getRandomAmount());
 	txnRequest.setRefTransId(transactionId);
 
 	var createRequest = new ApiContracts.CreateTransactionRequest();
@@ -83,4 +83,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.credit = credit;
+const _credit = credit;
+export { _credit as credit };

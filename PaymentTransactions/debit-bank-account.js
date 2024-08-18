@@ -1,14 +1,14 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomAmount } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function debitBankAccount(callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var bankAccountType = new ApiContracts.BankAccountType();
 	bankAccountType.setAccountType(ApiContracts.BankAccountTypeEnum.SAVINGS);
@@ -84,7 +84,7 @@ function debitBankAccount(callback) {
 	var transactionRequestType = new ApiContracts.TransactionRequestType();
 	transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
 	transactionRequestType.setPayment(paymentType);
-	transactionRequestType.setAmount(utils.getRandomAmount());
+	transactionRequestType.setAmount(getRandomAmount());
 	transactionRequestType.setLineItems(lineItems);
 	transactionRequestType.setOrder(orderDetails);
 	transactionRequestType.setTax(tax);
@@ -155,4 +155,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.debitBankAccount = debitBankAccount;
+const _debitBankAccount = debitBankAccount;
+export { _debitBankAccount as debitBankAccount };

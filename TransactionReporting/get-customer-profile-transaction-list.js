@@ -1,13 +1,13 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function getTransactionListForCustomer(customerProfileId, callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var paging = new ApiContracts.Paging();
 	paging.setLimit(10);
@@ -71,4 +71,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.getTransactionListForCustomer = getTransactionListForCustomer;
+const _getTransactionListForCustomer = getTransactionListForCustomer;
+export { _getTransactionListForCustomer as getTransactionListForCustomer };

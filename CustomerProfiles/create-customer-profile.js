@@ -1,15 +1,15 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomString } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function createCustomerProfile(callback) {
 
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var creditCard = new ApiContracts.CreditCardType();
 	creditCard.setCardNumber('4242424242424242');
@@ -37,9 +37,9 @@ function createCustomerProfile(callback) {
 	paymentProfilesList.push(customerPaymentProfileType);
 
 	var customerProfileType = new ApiContracts.CustomerProfileType();
-	customerProfileType.setMerchantCustomerId('M_' + utils.getRandomString('cust'));
+	customerProfileType.setMerchantCustomerId('M_' + getRandomString('cust'));
 	customerProfileType.setDescription('Profile description here');
-	customerProfileType.setEmail(utils.getRandomString('cust')+'@anet.net');
+	customerProfileType.setEmail(getRandomString('cust')+'@anet.net');
 	customerProfileType.setPaymentProfiles(paymentProfilesList);
 
 	var createRequest = new ApiContracts.CreateCustomerProfileRequest();
@@ -90,4 +90,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.createCustomerProfile = createCustomerProfile;
+const _createCustomerProfile = createCustomerProfile;
+export { _createCustomerProfile as createCustomerProfile };

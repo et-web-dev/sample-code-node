@@ -1,15 +1,15 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var SDKConstants = require('authorizenet').Constants;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { Constants as SDKConstants } from 'authorizenet';
+import { getRandomAmount } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function chargeCreditCard(callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var creditCard = new ApiContracts.CreditCardType();
 	creditCard.setCardNumber('4242424242424242');
@@ -112,7 +112,7 @@ function chargeCreditCard(callback) {
 	var transactionRequestType = new ApiContracts.TransactionRequestType();
 	transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
 	transactionRequestType.setPayment(paymentType);
-	transactionRequestType.setAmount(utils.getRandomAmount());
+	transactionRequestType.setAmount(getRandomAmount());
 	transactionRequestType.setLineItems(lineItems);
 	transactionRequestType.setUserFields(userFields);
 	transactionRequestType.setOrder(orderDetails);
@@ -186,4 +186,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.chargeCreditCard = chargeCreditCard;
+const _chargeCreditCard = chargeCreditCard;
+export { _chargeCreditCard as chargeCreditCard };

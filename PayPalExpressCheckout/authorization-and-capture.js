@@ -1,14 +1,14 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomAmount } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function authorizationAndCapture(callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var payPalType = new ApiContracts.PayPalType();
 	payPalType.setCancelUrl('http://www.merchanteCommerceSite.com/Success/TC25262');
@@ -21,7 +21,7 @@ function authorizationAndCapture(callback) {
 	var transactionRequestType = new ApiContracts.TransactionRequestType();
 	transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
 	transactionRequestType.setPayment(paymentType);
-	transactionRequestType.setAmount(utils.getRandomAmount());
+	transactionRequestType.setAmount(getRandomAmount());
 
 	var createRequest = new ApiContracts.CreateTransactionRequest();
 	createRequest.setMerchantAuthentication(merchantAuthenticationType);
@@ -83,4 +83,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.authorizationAndCapture = authorizationAndCapture;
+const _authorizationAndCapture = authorizationAndCapture;
+export { _authorizationAndCapture as authorizationAndCapture };

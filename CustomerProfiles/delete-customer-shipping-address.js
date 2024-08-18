@@ -1,14 +1,14 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function deleteCustomerShippingAddress(customerProfileId, customerAddressId, callback) {
 
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var deleteRequest = new ApiContracts.DeleteCustomerShippingAddressRequest();
 	deleteRequest.setMerchantAuthentication(merchantAuthenticationType);
@@ -57,4 +57,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.deleteCustomerShippingAddress = deleteCustomerShippingAddress;
+const _deleteCustomerShippingAddress = deleteCustomerShippingAddress;
+export { _deleteCustomerShippingAddress as deleteCustomerShippingAddress };

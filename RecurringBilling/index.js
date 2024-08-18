@@ -1,11 +1,9 @@
 'use strict';
 
-module.exports = {
-	cancelSubscription: require('./cancel-subscription.js').cancelSubscription,
-	createSubscriptionFromCustomerProfile: require('./create-subscription-from-customer-profile.js').createSubscriptionFromCustomerProfile,
-	createSubscription: require('./create-subscription.js').createSubscription,
-	getListOfSubscriptions: require('./get-list-of-subscriptions.js').getListOfSubscriptions,
-	getSubscriptionStatus: require('./get-subscription-status.js').getSubscriptionStatus,
-	getSubscription: require('./get-subscription.js').getSubscription,
-	updateSubscription: require('./update-subscription.js').updateSubscription
-};
+export const cancelSubscription = require('./cancel-subscription.js').cancelSubscription;
+export const createSubscriptionFromCustomerProfile = require('./create-subscription-from-customer-profile.js').createSubscriptionFromCustomerProfile;
+export const createSubscription = require('./create-subscription.js').createSubscription;
+export const getListOfSubscriptions = require('./get-list-of-subscriptions.js').getListOfSubscriptions;
+export const getSubscriptionStatus = require('./get-subscription-status.js').getSubscriptionStatus;
+export const getSubscription = require('./get-subscription.js').getSubscription;
+export const updateSubscription = require('./update-subscription.js').updateSubscription;

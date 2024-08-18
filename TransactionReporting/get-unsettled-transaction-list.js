@@ -1,13 +1,13 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function getUnsettledTransactionList(callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var getRequest = new ApiContracts.GetUnsettledTransactionListRequest();
 
@@ -71,4 +71,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.getUnsettledTransactionList = getUnsettledTransactionList;
+const _getUnsettledTransactionList = getUnsettledTransactionList;
+export { _getUnsettledTransactionList as getUnsettledTransactionList };

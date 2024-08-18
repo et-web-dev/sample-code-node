@@ -1,14 +1,14 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomAmount } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function creditBankAccount(transactionId, callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var paymentType = new ApiContracts.PaymentType();
 
@@ -29,7 +29,7 @@ function creditBankAccount(transactionId, callback) {
 	transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.REFUNDTRANSACTION);
 	transactionRequestType.setPayment(paymentType);
 	transactionRequestType.setRefTransId(transactionId);
-	transactionRequestType.setAmount(utils.getRandomAmount());
+	transactionRequestType.setAmount(getRandomAmount());
 	transactionRequestType.setOrder(orderDetails);
 
 	var createRequest = new ApiContracts.CreateTransactionRequest();
@@ -93,4 +93,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.creditBankAccount = creditBankAccount;
+const _creditBankAccount = creditBankAccount;
+export { _creditBankAccount as creditBankAccount };

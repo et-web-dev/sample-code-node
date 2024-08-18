@@ -1,18 +1,18 @@
 'use strict';
 
-var ApiContracts = require('authorizenet').APIContracts;
-var ApiControllers = require('authorizenet').APIControllers;
-var utils = require('../utils.js');
-var constants = require('../constants.js');
+import { APIContracts as ApiContracts } from 'authorizenet';
+import { APIControllers as ApiControllers } from 'authorizenet';
+import { getRandomString } from '../utils.js';
+import { apiLoginKey, transactionKey } from '../constants.js';
 
 function updateSubscription(subscriptionId, callback) {
 	var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-	merchantAuthenticationType.setName(constants.apiLoginKey);
-	merchantAuthenticationType.setTransactionKey(constants.transactionKey);
+	merchantAuthenticationType.setName(apiLoginKey);
+	merchantAuthenticationType.setTransactionKey(transactionKey);
 
 	var orderType = new ApiContracts.OrderType();
-	orderType.setInvoiceNumber(utils.getRandomString('Inv:')); 
-	orderType.setDescription(utils.getRandomString('Description'));
+	orderType.setInvoiceNumber(getRandomString('Inv:')); 
+	orderType.setDescription(getRandomString('Description'));
 
 	var arbSubscriptionType = new ApiContracts.ARBSubscriptionType();
 	arbSubscriptionType.setOrder(orderType);
@@ -59,4 +59,5 @@ if (require.main === module) {
 	});
 }
 
-module.exports.updateSubscription = updateSubscription;
+const _updateSubscription = updateSubscription;
+export { _updateSubscription as updateSubscription };
